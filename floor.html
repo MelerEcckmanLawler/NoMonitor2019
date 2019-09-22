@@ -1,0 +1,219 @@
+<p>
+  <label for="dropdown">Material:</label>
+  <select name="dropdown" onchange="dropdown(this)">
+    <option value='Carpet, laminate, sheet vinyl'>Carpet, laminate, sheet vinyl</option>
+    <option value='Vinyl Plank, Vinyl Tile, Tile/Stone'>Vinyl Plank, Vinyl Tile, Tile/Stone</option>
+    <option value='Hardwood'>Hardwood</option>
+  </select>
+</p>
+
+<p>
+  <label for="length of room in feet">Room Length:</label>
+  <input type="number" name="length of room in feet" class='feet' min="0" onchange='update()'> feet
+  <input type="number" name="length of room in inches" class='inches' min="0" max="11" onchange='update()'> inches
+</p>
+
+<p>
+  <label for="width of room in feet">Room Width:</label>
+  <input type="number" name="width of room in feet" class='feet' min="0" onchange='update()'> feet
+  <input type="number" name="width of room in inches" class='inches' min="0" max="11" onchange='update()'> inches
+</p>
+
+<p id='material length'>
+  <label for="length of material in inches">Material Length:</label>
+  <input type="number" name="length of material in inches" class='inches' min="0" max="11" onchange='update()'> inches
+</p>
+
+<p id='material width'>
+  <label for="width of material in inches">Material Width:</label>
+  <input type="number" name="width of material in inches" class='inches' min="0" max="11" onchange='update()'> inches
+</p>
+
+<p id='plank length'>
+  <label for="length of plank in inches">Plank Length:</label>
+  <input type="number" name="length of plank in inches" class='inches' style='width: 7em' min="0" max="11" onchange='update()' placeholder="6.29921e-34"> inches
+</p>
+
+<p id='plank width'>
+  <label for="width of plank in inches">Plank Width:</label>
+  <input type="number" name="width of plank in inches" class='inches' min="0" max="11" onchange='update()'> inches
+</p>
+
+<p>
+  <label for="Qty before waste % added">Qty before waste % added:</label>
+  <span name='Qty before waste % added'>???</span>
+</p>
+<p>
+  <label for="Qty after waste % added">Qty after waste % added:</label>
+  <span name='Qty after waste % added'>???</span>
+</p>
+<p>
+  <label for="Total sq.ft.">Total sq.ft.:</label>
+  <span name='Total sq.ft.'></span>
+</p>
+
+<script>
+var selEl = document.getElementsByName('dropdown')[0];
+selEl.options[2].selected = true;
+selEl.onchange();
+
+  function update() {
+    switch (document.getElementsByName('dropdown')[0].value) {
+      case 'Carpet, laminate, sheet vinyl':
+        calculateCarpet();
+        break;
+      case 'Vinyl Plank, Vinyl Tile, Tile/Stone':
+        calculateVinyl();
+        break;
+      case 'Hardwood':
+        calculateHardwood();
+        break;
+    }
+  }
+
+  function sqrFt() {
+    feet1 = document.getElementsByName('length of room in feet')[0].value;
+    inches1 = document.getElementsByName('length of room in inches')[0].value;
+    feet1 = Number(feet1);
+    inches1 = Number(inches1);
+    feet2 = document.getElementsByName('width of room in feet')[0].value;
+    inches2 = document.getElementsByName('width of room in inches')[0].value;
+    feet2 = Number(feet2);
+    inches2 = Number(inches2);
+    document.getElementsByName('Total sq.ft.')[0].innerHTML = (feet1 + (inches1 * (1/12))) * (feet2 + (inches2 * (1/12)));
+  }
+
+  function calculateCarpet() {
+    sqrFt();
+  }
+
+  function calculateVinyl() {
+    sqrFt();
+  }
+
+  function calculateHardwood() {
+    sqrFt();
+  }
+
+  function dropdown(choice) {
+    switch (choice.value) {
+      case 'Carpet, laminate, sheet vinyl':
+        document.getElementById('material length').style.visibility = 'hidden';
+        document.getElementById('material width').style.visibility = 'hidden';
+        document.getElementById('plank length').style.visibility = 'hidden';
+        document.getElementById('plank width').style.visibility = 'hidden';
+        break;
+      case 'Vinyl Plank, Vinyl Tile, Tile/Stone':
+        document.getElementById('material length').style.visibility = 'visible';
+        document.getElementById('material width').style.visibility = 'visible';
+        document.getElementById('plank length').style.visibility = 'hidden';
+        document.getElementById('plank width').style.visibility = 'hidden';
+        break;
+      case 'Hardwood':
+        document.getElementById('material length').style.visibility = 'hidden';
+        document.getElementById('material width').style.visibility = 'hidden';
+        document.getElementById('plank length').style.visibility = 'visible';
+        document.getElementById('plank width').style.visibility = 'visible';
+        break;
+    }
+  }
+</script>
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+p {
+  font-weight: bold;
+}
+.feet, .inches {
+  width: 2.5em;
+  text-align: right;
+}
+
+body {
+  background: #EAEBEC;
+}
+
+.container {
+  width: 400px;
+  margin: auto;
+}
+
+.calc-body {
+  width: 275px;
+  margin: auto;
+  min-height: 400px;
+  border: solid 1px #3A4655;
+  box-shadow: 0 8px 50px -7px black;
+}
+
+.calc-screen {
+  background: #3A4655;
+  width: 100%;
+  height: 150px;
+  padding: 20px;
+}
+
+.calc-operation {
+  text-align: right;
+  color: #727B86;
+  font-size: 21px;
+  padding-bottom: 10px;
+  border-bottom: dotted 1px;
+}
+
+.calc-typed {
+  margin-top: 20px;
+  font-size: 45px;
+  text-align: right;
+  color: #fff;
+}
+
+.calc-button-row {
+  width: 100%;
+  background: #3C4857;
+}
+
+.button {
+  width: 25%;
+  background: #425062;
+  color: #fff;
+  padding: 20px;
+  display: inline-block;
+  font-size: 25px;
+  text-align: center;
+  vertical-align: middle;
+  margin-right: -4px;
+  border-right: solid 2px #3C4857;
+  border-bottom: solid 2px #3C4857;
+  transition: all 0.2s ease-in-out;
+}
+
+.button.l {
+  color: #AEB3BA;
+  background: #404D5E;
+}
+
+.button.c {
+  color: #D95D4E;
+  background: #404D5E;
+}
+
+.button:hover {
+  background: #E0B612;
+  transform: rotate(5deg);
+}
+
+.button.c:hover,
+.button.l:hover {
+  background: #E0B612;
+  color: #fff;
+}
+
+.blink-me {
+  color: #E0B612;
+}
+</style>
